@@ -1097,8 +1097,8 @@
                 btnText.innerText = "Sending...";
 
                 try {
-                    // This will hit the local Node.js backend we will create
-                    const response = await fetch('http://localhost:3000/api/contact', {
+                    // Send data to backend using relative URL for Vercel
+                    const response = await fetch('/api/contact', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
