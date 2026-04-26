@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahil Sain | Software Engineer</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- GSAP for 1 Cr premium animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #030303;
+            --surface: #0a0a0a;
+            --card-bg: rgba(15, 15, 15, 0.4);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #999999;
+            --accent: #3b82f6;
+            --gradient-text: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.03em;
+        }
+
+        /* 1 CR Advanced Animated Background */
+        .mesh-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: radial-gradient(at 0% 0%, rgba(29, 78, 216, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(124, 58, 237, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(29, 78, 216, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(124, 58, 237, 0.15) 0px, transparent 50%);
+            filter: blur(80px);
+            animation: mesh-morph 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes mesh-morph {
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            100% {
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        /* Noise Overlay for premium texture */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Ambient Glow & Cursor Tracking */
+        #cursor-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: opacity 0.3s;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header & Logo Replacement */
+        header {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(3, 3, 3, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 100;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.4s;
+        }
+
+        header.scrolled {
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Advanced Animated Logo replacing upper left 'Sahil.' */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .logo-symbol {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: white;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-symbol::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateY(-100%) rotate(45deg);
+            }
+
+            20%,
+            100% {
+                transform: translateY(100%) rotate(45deg);
+            }
+        }
+
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.05em;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Glitch effect on hover for logo text */
+        .logo-wrapper:hover .logo-text {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: #3b82f6;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0)
+            }
+
+            20% {
+                transform: translate(-2px, 2px)
+            }
+
+            40% {
+                transform: translate(-2px, -2px)
+            }
+
+            60% {
+                transform: translate(2px, 2px)
+            }
+
+            80% {
+                transform: translate(2px, -2px)
+            }
+
+            100% {
+                transform: translate(0)
+            }
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--text-primary);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            gap: 5rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .badge .dot {
+            width: 6px;
+            height: 6px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 7vw, 6rem);
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 550px;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        /* Advanced Image Reveal & Parallax */
+        .hero-img-wrapper {
+            flex-shrink: 0;
+            width: 380px;
+            height: 380px;
+            position: relative;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 32px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            transform-style: preserve-3d;
+        }
+
+        .hero-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.1);
+            transition: filter 0.8s ease;
+        }
+
+        .hero-img-wrapper:hover .hero-img img {
+            filter: grayscale(0%) contrast(1);
+        }
+
+        /* Magnetic Buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .magnetic-btn {
+            padding: 1rem 2.2rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Sections */
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 3.5rem;
+            margin-top: 10rem;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Cards with Advanced Border Glow */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(16px);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* Experience */
+        .experience-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .job-company {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .job-date {
+            color: var(--text-secondary);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+        }
+
+        .job-desc {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Projects Grid with Parallax Images */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-card .img-wrapper {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 120%;
+            object-fit: cover;
+            position: absolute;
+            top: -10%;
+            transition: filter 0.5s;
+            filter: grayscale(40%);
+        }
+
+        .project-card:hover img {
+            filter: grayscale(0%);
+        }
+
+        .project-content {
+            padding: 2.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .project-content p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            flex: 1;
+            line-height: 1.7;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover .tag {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Github specific project */
+        .github-project {
+            background: rgba(20, 20, 20, 0.6);
+            justify-content: center;
+        }
+
+        .github-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            transition: transform 0.5s;
+        }
+
+        .github-project:hover .github-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-item {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 1.2rem 2.5rem;
+            border-radius: 100px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item:hover {
+            color: var(--bg);
+            border-color: var(--text-primary);
+            background: var(--text-primary);
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 12rem;
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+            outline: none;
+            width: 100%;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: left;
+                gap: 3rem;
+                margin-top: 4rem;
+                align-items: flex-start;
+            }
+
+            .hero-img-wrapper {
+                width: 100%;
+                height: 350px;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: flex-start;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 2rem;
+                align-items: flex-start;
+            }
+
+            #cursor-glow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mesh-bg"></div>
+    <div class="noise"></div>
+    <div id="cursor-glow"></div>
+
+    <div class="container">
+        <header id="header">
+            <!-- Advanced Animated Logo -->
+            <a href="#" class="logo-wrapper">
+                <div class="logo-symbol">S</div>
+                <div class="logo-text">Sahil.</div>
+            </a>
+            <nav>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Work</a>
+                <a href="#skills">Arsenal</a>
+                <a href="#contact">Connect</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Hero -->
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="badge animate-up">
+                        <div class="dot"></div>
+                        Available for Opportunities
+                    </div>
+                    <h1 class="animate-up" style="animation-delay: 0.1s;">Sahil Sain.</h1>
+                    <p class="animate-up" style="animation-delay: 0.2s;">
+                        Software Engineer & Data Analyst crafting high-performance AI solutions, robust data pipelines,
+                        and elite digital experiences. Currently a B.Tech CSE student at UEM Jaipur.
+                    </p>
+                    <div class="btn-group animate-up" style="animation-delay: 0.3s;">
+                        <a href="#projects" class="magnetic-btn btn-primary">Explore Work</a>
+                        <a href="https://github.com/sahilsain01" target="_blank"
+                            class="magnetic-btn btn-outline">GitHub</a>
+                        <a href="https://www.linkedin.com/in/sahil-sain-3a38542b0/" target="_blank"
+                            class="magnetic-btn btn-outline">LinkedIn</a>
+                    </div>
+                </div>
+                <div class="hero-img-wrapper animate-in">
+                    <div class="hero-img" id="hero-img-container">
+                        <img src="./profile_picture.png" alt="Sahil Sain" id="hero-image-parallax">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience -->
+            <section id="experience">
+                <h2 class="section-title fade-in">Experience & Education</h2>
+                <div class="experience-grid">
+                    <div class="card fade-up">
+                        <div class="job-header">
+                            <div>
+                                <span class="job-title">Data Analyst Intern</span>
+                                <span class="job-company">— AppInventers</span>
+                            </div>
+                            <span class="job-date">Sep 2025 – Dec 2025</span>
+                        </div>
+                        <p class="job-desc">
+                            Analyzed 10,000+ record datasets using Python and SQL to deliver actionable reports. Built
+                            automated data pipelines with Pandas and NumPy that reduced manual processing time by 35%.
+                            Designed interactive Power BI dashboards utilizing DAX, empowering stakeholders to track
+                            KPIs independently.
+                        </p>
+                    </div>
+
+                    <div class="card fade-up">
+                        <div class="job-header">
+                            <div>
+                                <span class="job-title">B.Tech Computer Science</span>
+                                <span class="job-company">— UEM Jaipur</span>
+                            </div>
+                            <span class="job-date">Aug 2022 – May 2026</span>
+                        </div>
+                        <p class="job-desc">
+                            <strong style="color: var(--text-primary)">CGPA:</strong> 7.2<br><br>
+                            <strong style="color: var(--text-primary)">Honors:</strong> 2nd Place Robotechz Competition
+                            (2023) • 4th Place Hack with Chess Hackathon (2024)<br><br>
+                            <strong style="color: var(--text-primary)">Certifications:</strong> NPTEL Data Science •
+                            NPTEL Machine Learning • NPTEL Joy of Computing Python • Coursera Power BI
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section id="projects">
+                <h2 class="section-title fade-in">Selected Projects</h2>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <a href="https://github.com/sahilsain01/Patient-Hospitalization-Prediction" target="_blank"
+                        class="card project-card fade-up">
+                        <div class="img-wrapper">
+                            <img src="./medical_dashboard.png" class="parallax-img"
+                                alt="Patient Hospitalization Prediction">
+                        </div>
+                        <div class="project-content">
+                            <h3>Patient Hospitalization</h3>
+                            <p>Logistic Regression classifier predicting patient hospitalization needs from COVID-19
+                                clinical records. Built a robust ML pipeline with 100% accuracy on test data.</p>
+                            <div class="tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">Scikit-learn</span>
+                                <span class="tag">Pandas</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 2 -->
+                    <a href="https://github.com/sahilsain01/Retail-Sales-Analysis-Power-BI-Dashboard" target="_blank"
+                        class="card project-card fade-up">
+                        <div class="img-wrapper">
+                            <img src="./sales_dashboard.png" class="parallax-img" alt="Retail Sales Analysis">
+                        </div>
+                        <div class="project-content">
+                            <h3>Retail Sales Analytics</h3>
+                            <p>Scrubbed and analyzed a 50,000+ row dataset to find a 16.82% revenue exposure gap.
+                                Designed an interactive Power BI dashboard with real-time KPI tracking.</p>
+                            <div class="tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">SQL</span>
+                                <span class="tag">Power BI</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 3 (From GitHub) -->
+                    <a href="https://github.com/sahilsain01/Chess-Engine" target="_blank"
+                        class="card project-card github-project fade-up">
+                        <div class="project-content" style="align-items: center; text-align: center;">
+                            <div class="github-icon">
+                                <svg height="64" viewBox="0 0 16 16" width="64" fill="currentColor">
+                                    <path
+                                        d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h3>Chess-Engine AI</h3>
+                            <p>Created a custom Chess-engine implementing the Alpha-Beta Pruning Algorithm using the
+                                Python-Chess Module. High-performance AI logic execution.</p>
+                            <div class="tags" style="justify-content: center; margin-top: auto;">
+                                <span class="tag">Python</span>
+                                <span class="tag">Algorithms</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section id="skills" style="margin-bottom: 5rem;">
+                <h2 class="section-title fade-in">Technical Arsenal</h2>
+                <div class="skills-container fade-up">
+                    <div class="skill-item">Python</div>
+                    <div class="skill-item">C++</div>
+                    <div class="skill-item">SQL</div>
+                    <div class="skill-item">Scikit-learn</div>
+                    <div class="skill-item">Pandas</div>
+                    <div class="skill-item">NumPy</div>
+                    <div class="skill-item">Power BI</div>
+                    <div class="skill-item">DAX</div>
+                    <div class="skill-item">Git & GitHub</div>
+                    <div class="skill-item">SQLAlchemy</div>
+                </div>
+            </section>
+
+            <!-- Let's Connect -->
+            <section id="contact" style="margin-bottom: 5rem;">
+                <h2 class="section-title fade-in" style="text-align: center; margin-top: 5rem;">Let's Connect</h2>
+                <div class="card fade-up" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">Interested in collaborating or have a
+                        question? Send me a message and I'll get back to you shortly.</p>
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-input" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-input" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-input" required
+                                placeholder="Let's build something amazing..."></textarea>
+                        </div>
+                        <button type="submit" class="magnetic-btn btn-primary"
+                            style="margin-top: 1rem; width: 100%; cursor: pointer; border: none; font-size: 1rem;">
+                            <span id="btn-text">Send Message</span>
+                        </button>
+                        <div id="form-status"
+                            style="text-align: center; margin-top: 1rem; font-weight: 500; display: none;"></div>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div>&copy; 2026 Sahil Sain. Engineered with Precision.</div>
+            <div class="social-links">
+                <a href="https://github.com/sahilsain01" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/sahil-sain-3a38542b0/" target="_blank">LinkedIn</a>
+                <a href="mailto:sahilaryan2009@gmail.com">Email</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Script for Advanced Interactions -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Cursor Glow Tracking
+        const cursorGlow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursorGlow, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+
+        // 2. Header State
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                document.getElementById('header').classList.add('scrolled');
+            } else {
+                document.getElementById('header').classList.remove('scrolled');
+            }
+        });
+
+        // 3. Magnetic Buttons (Advance Tech Feel)
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                gsap.to(btn, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+
+        // 4. Initial Entry Animations
+        gsap.fromTo(".animate-up",
+            { y: 60, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" }
+        );
+
+        gsap.fromTo(".animate-in",
+            { scale: 0.9, opacity: 0, filter: "blur(10px)" },
+            { scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.5, ease: "power3.out", delay: 0.3 }
+        );
+
+        // 5. Scroll Reveal Animations
+        document.querySelectorAll('.fade-up').forEach((el) => {
+            gsap.fromTo(el,
+                { y: 60, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 1, ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+
+        document.querySelectorAll('.fade-in').forEach((el) => {
+            gsap.fromTo(el,
+                { opacity: 0, scale: 0.95 },
+                {
+                    opacity: 1, scale: 1, duration: 1.2, ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 90%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+
+        // 6. Image Parallax inside Project Cards
+        document.querySelectorAll('.parallax-img').forEach(img => {
+            gsap.to(img, {
+                yPercent: 20,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: img.parentElement.parentElement,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+        });
+
+        // 7. Advanced 3D Hover on Cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -4;
+                const rotateY = ((x - centerX) / centerX) * 4;
+
+                gsap.to(card, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    scale: 1.02,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    transformPerspective: 1000
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    rotationX: 0,
+                    rotationY: 0,
+                    scale: 1,
+                    duration: 0.8,
+                    ease: "power3.out"
+                });
+            });
+        });
+
+        // 8. Hero Image Hover Parallax
+        const heroImgContainer = document.getElementById('hero-img-container');
+        const heroImg = document.getElementById('hero-image-parallax');
+
+        if (heroImgContainer) {
+            heroImgContainer.addEventListener('mousemove', (e) => {
+                const rect = heroImgContainer.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                gsap.to(heroImgContainer, {
+                    rotationY: x * 15,
+                    rotationX: -y * 15,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    transformPerspective: 1000
+                });
+
+                gsap.to(heroImg, {
+                    x: x * -20,
+                    y: y * -20,
+                    scale: 1.1,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            });
+
+            heroImgContainer.addEventListener('mouseleave', () => {
+                gsap.to(heroImgContainer, { rotationY: 0, rotationX: 0, duration: 1, ease: "power3.out" });
+                gsap.to(heroImg, { x: 0, y: 0, scale: 1, duration: 1, ease: "power3.out" });
+            });
+        }
+
+        // 9. Contact Form Handling
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+        const btnText = document.getElementById('btn-text');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+
+                btnText.innerText = "Sending...";
+
+                try {
+                    // This will hit the local Node.js backend we will create
+                    const response = await fetch('http://localhost:3000/api/contact', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ name, email, message })
+                    });
+
+                    if (response.ok) {
+                        formStatus.style.display = 'block';
+                        formStatus.style.color = '#10b981'; // Success Green
+                        formStatus.innerText = "Message sent successfully! I will get back to you soon.";
+                        contactForm.reset();
+                    } else {
+                        throw new Error('Failed to send');
+                    }
+                } catch (error) {
+                    formStatus.style.display = 'block';
+                    formStatus.style.color = '#ef4444'; // Error Red
+                    formStatus.innerText = "Oops! Could not connect to the database/backend. Is the server running?";
+                } finally {
+                    btnText.innerText = "Send Message";
+                    setTimeout(() => {
+                        formStatus.style.display = 'none';
+                    }, 5000);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
